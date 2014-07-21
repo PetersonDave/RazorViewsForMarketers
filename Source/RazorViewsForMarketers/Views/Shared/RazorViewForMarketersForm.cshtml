@@ -1,0 +1,24 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using RazorViewsForMarketers.Helpers
+@inherits RazorViewsForMarketers.Helpers.BladeRazorRendering<RazorViewsForMarketers.Model.RazordViewForMarketersFormModel>
+
+@BladeHelper.TextFor(model => model.Title)
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new {id = "hackForm"}))
+{
+    <h2>Form</h2>
+    
+    @Html.DisplayTextFor(model => model.SubmitMessage)
+    
+    <div class="form">
+        @Html.EditorFor(model => model.Form.Sections)    
+    </div>
+
+    <button type="submit" value="Submit" name="Command">Submit Form</button>
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>

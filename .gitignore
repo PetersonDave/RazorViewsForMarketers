@@ -1,0 +1,86 @@
+######## GENERAL IGNORES #######
+
+# ignore logs, OS cache files
+*.log
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+######## GENERAL .NET IGNORES ########
+
+# Ignore binaries in the source
+Source/*/bin
+Source/*/obj
+
+Source/**/bin
+Source/**/obj
+
+Dependencies/Libraries/*/bin
+Dependencies/Libraries/*/obj
+
+# Ignore user-scoped solution and project settings
+*.user
+*.suo
+
+# Ignore generated Version.cs files
+Source/*/Properties/Version.cs
+
+######## SITECORE IGNORES ########
+
+Source/Neb.Web/App_Config/LocalConnectionStrings.config
+Source/*.Web/temp
+Source/*.Web/MediaCache
+Source/*.Web/App_Data/MediaCache
+Source/*.Web/sitecore modules/debug
+Source/*.Web/sitecore/shell/Applications/debug
+Source/*.Web/sitecore/shell/Controls/debug
+Source/*.Web/sitecore/shell/Override/debug
+Source/*.Web/sitecore/admin/packages/*.update
+
+# js files emitted by page editor
+Source/*.Web/sitecore/shell/Applications/Page Modes/Ouput
+
+# ignore all folders in web data folder but keep readme files within them (prevent empty folder deletion)
+Source/*.Web/Data/*/*
+!Source/*.Web/Data/*/readme.txt
+!Source/*.Web/Data/serialization/*
+!Source/*.Web/Data/PAFFiles
+!Source/*.Web/Data/Packages/*
+
+# ignore rocks connections files
+*.sitecore
+!isite.sitecore
+
+######## DEBUT IGNORES ########
+# ignore synthesis generation history files
+_Generated.cs.*
+
+# ignore generated CSS/JS
+Source/*.Web/Sites/*/_resources/*/production/*
+!Source/*.Web/Sites/*/_resources/*/production/.gitignore
+
+# ignore debug-preprocessed CSS/JS (e.g. SASS, CoffeeScript)
+*.debug.css
+*.debug.js
+
+######## MISC IGNORES ########
+
+# Beaver project build files
+Build/System/Support/Beaver/bin/Debug
+Build/System/Support/Beaver/obj
+# Inception Helper Project
+Scripts/Inception/System/Support/*/obj
+Scripts/Inception/System/Support/*/bin/Debug
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+*.DS_Store
+._*
+Source/Neb.Data/Items/_Generated_Interfaces.cs.*
+Source/Neb.Data/Items/_Generated_Classes.cs.*
