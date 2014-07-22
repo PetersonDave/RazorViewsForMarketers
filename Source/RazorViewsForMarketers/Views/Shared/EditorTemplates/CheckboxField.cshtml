@@ -1,8 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using RazorViewsForMarketers.Helpers
-@inherits RazorViewsForMarketers.Helpers.BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.CheckboxField>
+@inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.CheckboxField>
 
-<h2>CheckboxField</h2>
 <div class="field">
     @Html.HiddenFor(model => model.ValidatorIds)
     @Html.HiddenFor(model => model.IsRequired)
@@ -10,7 +9,7 @@
     
     @BladeHtmlHelper.SitecoreLabel(Html, model => model)
 
-    @Html.TextBoxFor(model => model.Response)
+    @Html.CheckBoxFor(model => model.Checked)
     @BladeHtmlHelper.RequiredIndicator(model => model)
 
     <p>@Model.Information</p>

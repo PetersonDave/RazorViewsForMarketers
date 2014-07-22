@@ -1,13 +1,13 @@
 ﻿using Blade.Razor;
-using RazorViewsForMarketers.Model;
+using RazorViewsForMarketers.Models;
 
 namespace RazorViewsForMarketers.Helpers
 {
     public static class BladeExtensions
     {
-        public static BladeHtmlHelper<RazordViewForMarketersFormModel> BladeHelper(this RazorRendering<RazordViewForMarketersFormModel> form)
+        public static BladeHtmlHelper<RazorViewForMarketersFormModel> BladeHelper(this RazorRendering<RazorViewForMarketersFormModel> form)
         {
-            return new BladeHtmlHelper<RazordViewForMarketersFormModel>(form);
+            return new BladeHtmlHelper<RazorViewForMarketersFormModel>(form);
         }
     }
 }

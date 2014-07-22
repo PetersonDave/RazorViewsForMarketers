@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using RazorViewsForMarketers.Presenters;
-using RazorViewsForMarketers.Validators;
+using RazorViewsForMarketers.Core;
+using RazorViewsForMarketers.Core.Validators;
 using Sitecore.Reflection;
 using Validator = RazorViewsForMarketers.Models.Validators.Validator;
 

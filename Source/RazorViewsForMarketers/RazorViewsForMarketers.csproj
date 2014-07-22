@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Blade">
       <HintPath>..\packages\Blade.Core.2.1.1.0\lib\net45\Blade.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -39,17 +40,18 @@
     </Reference>
     <Reference Include="RazorEngine">
       <HintPath>..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Forms.Core">
-      <HintPath>..\..\Dependencies\Sitecore\Sitecore.Forms.Core.dll</HintPath>
+      <HintPath>..\..\Dependencies\Libraries\Sitecore\Sitecore.Forms.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Forms.Custom">
-      <HintPath>..\..\Dependencies\Sitecore\Sitecore.Forms.Custom.dll</HintPath>
+      <HintPath>..\..\Dependencies\Libraries\Sitecore\Sitecore.Forms.Custom.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Dependencies\Sitecore-Dist\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\Dependencies\Libraries\Sitecore\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -59,27 +61,27 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\..\..\Wffm\Website\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -97,7 +99,7 @@
     <Compile Include="Helpers\BladeRazorRenderingEditorTemplate.cs" />
     <Compile Include="Helpers\ValidatorHelper.cs" />
     <Compile Include="ModelBinding\WffmFieldModelBinder.cs" />
-    <Compile Include="Models\DecoratedControlResult.cs" />
+    <Compile Include="Core\DecoratedControlResult.cs" />
     <Compile Include="Models\Fields\CaptchaField.cs" />
     <Compile Include="Models\Fields\CheckboxField.cs" />
     <Compile Include="Models\Fields\CheckBoxListField.cs" />
@@ -117,105 +119,52 @@
     <Compile Include="Models\Fields\SmsMmsTelephoneField.cs" />
     <Compile Include="Models\Fields\TelephoneField.cs" />
     <Compile Include="Models\Fields\WffmField.cs" />
-    <Compile Include="Models\ModifiedSimpleForm.cs">
+    <Compile Include="Core\ModifiedSimpleForm.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Models\Validators\CaptchaValidator.cs" />
-    <Compile Include="Models\Validators\ComparePasswordConfirmationValidator.cs" />
-    <Compile Include="Models\Validators\CountCharsValidator.cs" />
-    <Compile Include="Models\Validators\DateValidator.cs" />
-    <Compile Include="Models\Validators\EmailValidator.cs" />
-    <Compile Include="Models\Validators\IsAmericanExpressValidator.cs" />
-    <Compile Include="Models\Validators\IsDinersClubCarteBlancheValidator.cs" />
-    <Compile Include="Models\Validators\IsDinersClubInternationalValidator.cs" />
-    <Compile Include="Models\Validators\IsDinersClubUsAndCanadaValidator.cs" />
-    <Compile Include="Models\Validators\IsIsoDateValidator.cs" />
-    <Compile Include="Models\Validators\IsJcbValidator.cs" />
-    <Compile Include="Models\Validators\IsMaestroValidator.cs" />
-    <Compile Include="Models\Validators\IsMasterCardValidator.cs" />
-    <Compile Include="Models\Validators\IsSoloValidator.cs" />
-    <Compile Include="Models\Validators\IsSwitchValidator.cs" />
-    <Compile Include="Models\Validators\IsVisaElectronValidator.cs" />
-    <Compile Include="Models\Validators\IsVisaValidator.cs" />
-    <Compile Include="Models\Validators\LuhnFormulaValidator.cs" />
-    <Compile Include="Models\Validators\NumberRangeValidator.cs" />
-    <Compile Include="Models\Validators\NumberValidator.cs" />
-    <Compile Include="Models\Validators\RegExPatternValidator.cs" />
-    <Compile Include="Models\Validators\RobotProtectionValidator.cs" />
-    <Compile Include="Models\Validators\SmsMmsTelephoneValidator.cs" />
-    <Compile Include="Models\Validators\SuspiciousFormActivityValidator.cs" />
-    <Compile Include="Models\Validators\SuspiciousVisitorsValidator.cs" />
-    <Compile Include="Models\Validators\TelephoneValidator.cs" />
+    <Compile Include="Models\Validators\GenericValidator.cs" />
     <Compile Include="Models\Validators\Validator.cs" />
     <Compile Include="Models\WffmForm.cs" />
-    <Compile Include="Models\WffmResult.cs" />
-    <Compile Include="Models\WffmResults.cs" />
     <Compile Include="Models\WffmSection.cs" />
-    <Compile Include="Model\RazordViewForMarketersFormModel.cs" />
-    <Compile Include="Presenters\ECheckboxFieldParametersType.cs" />
-    <Compile Include="Presenters\ECreditCardFieldParametersType.cs" />
-    <Compile Include="Presenters\EDateFieldParametersType.cs" />
-    <Compile Include="Presenters\EDropListParametersType.cs" />
-    <Compile Include="Presenters\EFieldLocalizedParametersType.cs" />
-    <Compile Include="Presenters\EFieldParametersType.cs" />
-    <Compile Include="Presenters\EFileUploadFieldParametersType.cs" />
-    <Compile Include="Presenters\ERadioButtonListParametersType.cs" />
-    <Compile Include="Presenters\EValidatorParametersType.cs" />
-    <Compile Include="Presenters\FieldRenderers\CaptchaInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\CheckBoxInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\CheckBoxListInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\CreditCardFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\DateFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\DropListInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\EmailFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\FieldInitializerBase.cs" />
-    <Compile Include="Presenters\FieldRenderers\FileUploadInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\ListBoxInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\MultipleLineTextFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\NumberFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\PasswordConfirmationInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\PasswordFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\RadioListInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\SingleLineTextFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\TelephoneFieldInitializer.cs" />
-    <Compile Include="Presenters\FieldRenderers\TelephoneSmsMmsFieldInitializer.cs" />
-    <Compile Include="Presenters\HackThePlanetPresenter.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\CaptchaValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\ComparePasswordConfirmationValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\CountCharsValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\DateValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\EmailValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsAmericanExpressValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsDinersClubCarteBlancheValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsDinersClubInternationalValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsDinersClubUsAndCanadaValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsIsoDateValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsJcbValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsMaestroValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsMasterCardValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsSoloValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsSwitchValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsVisaElectronValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsVisaInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\IsVisaValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\LuhnFormulaValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\NumberRangeValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\NumberValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\RegExPatternValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\RobotProtectionValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\SmsMmsTelephoneValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\SuspiciousFormActivityValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\SuspiciousVisitorsValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\TelephoneValidatorInitializer.cs" />
-    <Compile Include="Presenters\ValidatorRenderers\ValidatorInitializerBase.cs" />
-    <Compile Include="Presenters\WffmFieldFactory.cs" />
+    <Compile Include="Models\RazorViewForMarketersFormModel.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\ECheckboxFieldParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\ECreditCardFieldParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\EDateFieldParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\EDropListParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\EFieldLocalizedParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\EFieldParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\EFileUploadFieldParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\EnumerationTypes\ERadioButtonListParametersType.cs" />
+    <Compile Include="Core\ValidatorRenderers\EnumerationTypes\EValidatorParametersType.cs" />
+    <Compile Include="Core\FieldRenderers\CaptchaInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\CheckBoxInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\CheckBoxListInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\CreditCardFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\DateFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\DropListInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\EmailFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\FieldInitializerBase.cs" />
+    <Compile Include="Core\FieldRenderers\FileUploadInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\ListBoxInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\MultipleLineTextFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\NumberFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\PasswordConfirmationInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\PasswordFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\RadioListInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\SingleLineTextFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\TelephoneFieldInitializer.cs" />
+    <Compile Include="Core\FieldRenderers\TelephoneSmsMmsFieldInitializer.cs" />
+    <Compile Include="Presenters\RazorViewForMarketersFormPresenter.cs" />
+    <Compile Include="Core\ValidatorRenderers\GenericValidatorInitializer.cs" />
+    <Compile Include="Core\ValidatorRenderers\ValidatorInitializerBase.cs" />
+    <Compile Include="Core\WffmFieldFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomModelMetadataProvider.cs" />
     <Compile Include="ValidatorAttributes\RuntimeRegularExpressionAttribute.cs" />
     <Compile Include="ValidatorAttributes\RuntimeRequiredAttribute.cs" />
     <Compile Include="ValidatorAttributes\RuntimeValidationAttribute.cs" />
-    <Compile Include="Validators\IValidator.cs" />
-    <Compile Include="Validators\RegularExpressionValidator.cs" />
+    <Compile Include="Core\Validators\IValidator.cs" />
+    <Compile Include="Core\Validators\RegularExpressionValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\EditorTemplates\CheckboxField.cshtml" />
@@ -261,6 +210,7 @@
     </Content>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

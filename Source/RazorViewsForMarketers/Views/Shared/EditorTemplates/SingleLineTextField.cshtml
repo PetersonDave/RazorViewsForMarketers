@@ -1,8 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using RazorViewsForMarketers.Helpers
-@inherits RazorViewsForMarketers.Helpers.BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
+@inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
 
-<h2>Single Line Text Field</h2>
 <div class="field">
     @Html.HiddenFor(model => model.ValidatorIds)
     @Html.HiddenFor(model => model.IsRequired)

@@ -1,11 +1,10 @@
-﻿@using System.Web.Mvc
-@using System.Web.Mvc.Html
+﻿@using System.Web.Mvc.Html
 @using RazorViewsForMarketers.Helpers
-@inherits RazorViewsForMarketers.Helpers.BladeRazorRendering<RazorViewsForMarketers.Model.RazordViewForMarketersFormModel>
+@inherits BladeRazorRendering<RazorViewsForMarketers.Models.RazorViewForMarketersFormModel>
 
 @BladeHelper.TextFor(model => model.Title)
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new {id = "hackForm"}))
+@using (Html.BeginForm(null, null, FormMethod.Post, new {id = "razorViewForMarketers"}))
 {
     <h2>Form</h2>
     
