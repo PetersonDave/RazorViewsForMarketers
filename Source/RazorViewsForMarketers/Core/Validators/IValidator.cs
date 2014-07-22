@@ -2,8 +2,9 @@ using RazorViewsForMarketers.Models.Validators;
 
 namespace RazorViewsForMarketers.Core.Validators
 {
-    public interface IValidator<T> where T : Validator
+    public interface IValidator
     {
+        GenericValidatorModel Validator { get; set; }
         bool Validate(string value);
     }
 }

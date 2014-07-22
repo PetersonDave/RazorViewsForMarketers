@@ -7,10 +7,16 @@ namespace RazorViewsForMarketers.Configuration
 {
     public static class ValidatorResolver
     {
-        private static readonly object SyncRoot = new object();
-        private static volatile Dictionary<string, Type> _current;
+        public class ValidatorDefinition
+        {
+            public Type ValidatorInitializer { get; set; }
+            public Type Validator { get; set; }
+        }
 
-        public static Dictionary<string, Type> Current
+        private static readonly object SyncRoot = new object();
+        private static volatile Dictionary<string, ValidatorDefinition> _current;
+
+        public static Dictionary<string, ValidatorDefinition> Current
         {
             get
             {
@@ -36,9 +42,9 @@ namespace RazorViewsForMarketers.Configuration
             }
         }
 
-        private static Dictionary<string, Type> GetValidatorDictionaryFromConfig()
+        private static Dictionary<string, ValidatorDefinition> GetValidatorDictionaryFromConfig()
         {
-            var validatorDictionary = new Dictionary<string, Type>();
+            var validatorDictionary = new Dictionary<string, ValidatorDefinition>();
             var nodes = Factory.GetConfigNodes("/sitecore/rvfm/validators/validator");
 
             foreach (XmlNode node in nodes)
@@ -48,6 +54,9 @@ namespace RazorViewsForMarketers.Configuration
                 var type = Type.GetType(node.Attributes["type"].Value);
                 if (type == null) throw new Exception(string.Format("Type {0} cannot be resolved. Please verify your type definition.", node.Attributes["type"].Value));
 
+                var validatorType = Type.GetType(node.Attributes["validator"].Value);
+                if (validatorType == null) throw new Exception(string.Format("Validator type {0} cannot be resolved. Please verify your type definition.", node.Attributes["validatorType"].Value));
+
                 var key = node.Attributes["name"].Value;
 
                 if (validatorDictionary.ContainsKey(key))
@@ -55,7 +64,8 @@ namespace RazorViewsForMarketers.Configuration
                     throw new Exception(string.Format("Field dictionary cannot caontain multuple fields of the same type: {0}", key));
                 }
 
-                validatorDictionary.Add(key, type);
+                var definition = new ValidatorDefinition() {ValidatorInitializer = type, Validator = validatorType};
+                validatorDictionary.Add(key, definition);
             }
 
             return validatorDictionary;

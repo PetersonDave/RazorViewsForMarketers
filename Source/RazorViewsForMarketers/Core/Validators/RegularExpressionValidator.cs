@@ -3,19 +3,21 @@ using RazorViewsForMarketers.Models.Validators;
 
 namespace RazorViewsForMarketers.Core.Validators
 {
-    public class RegularExpressionValidator : IValidator<GenericValidator>
+    public class GenericValidator : IValidator
     {
-        private readonly string _regularExpression;
-        public Validator Validator { get; set; }
+        public GenericValidatorModel Validator { get; set; }
 
-        public RegularExpressionValidator(string regularExpression)
+        public GenericValidator(GenericValidatorModel model)
         {
-            _regularExpression = regularExpression;
+            Validator = model;
         }
 
         public bool Validate(string value)
         {
-            var regEx = new Regex(_regularExpression);
+            bool canValidate = Validator != null && !string.IsNullOrEmpty(Validator.ValidationExpression);
+            if (!canValidate) return true;
+
+            var regEx = new Regex(Validator.ValidationExpression);
             return regEx.IsMatch(value);
         }
     }

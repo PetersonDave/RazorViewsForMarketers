@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using RazorViewsForMarketers.Models.Validators;
+﻿using System;
+using System.Collections.Generic;
+using RazorViewsForMarketers.Core.Validators;
 using RazorViewsForMarketers.ValidatorAttributes;
 using Sitecore.Data.Items;
 
@@ -7,9 +8,9 @@ namespace RazorViewsForMarketers.Models.Fields
 {
     public abstract class WffmField
     {
+        public Guid Id { get; set; }
         public Item Item { get; set; }
-        public IEnumerable<Validator> Validators { get; set; }
-        public string ValidatorIds { get; set; }
+        public IEnumerable<IValidator> Validators { get; set; }
         public string Title { get; set; }
         public bool IsRequired { get; set; }
         public string Help { get; set; }

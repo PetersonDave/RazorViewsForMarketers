@@ -2,9 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using RazorViewsForMarketers.Core;
-using RazorViewsForMarketers.Core.Validators;
-using Sitecore.Reflection;
-using Validator = RazorViewsForMarketers.Models.Validators.Validator;
+using Sitecore.Data;
 
 namespace RazorViewsForMarketers.ValidatorAttributes
 {
@@ -15,7 +13,7 @@ namespace RazorViewsForMarketers.ValidatorAttributes
         public string ValidationProperty { get; private set; }
         public string RegularExpressionValidationMessage { get; private set; }
 
-        public RuntimeValidationAttribute(string validationProperty = "ValidatorIds", string validatorsProperty = "Validators", string errorMessage = "The field is invalid.")
+        public RuntimeValidationAttribute(string validationProperty = "Id", string validatorsProperty = "Validators", string errorMessage = "The field is invalid.")
             : base(errorMessage)
         {
             ValidatorsProperty = validatorsProperty;
@@ -25,41 +23,27 @@ namespace RazorViewsForMarketers.ValidatorAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            PropertyInfo propertyRegularExpression = validationContext.ObjectType.GetProperty(ValidationProperty);
+            PropertyInfo propertyId = validationContext.ObjectType.GetProperty(ValidationProperty);
 
-            if (propertyRegularExpression == null || propertyRegularExpression.PropertyType != typeof(string))
+            if (propertyId == null || propertyId.PropertyType != typeof(Guid))
             {
                 throw new ArgumentException(ValidationProperty + " is not a valid property for " + validationContext.ObjectType.Name, ValidationProperty);
             }
 
-            var validators = (string)propertyRegularExpression.GetValue(validationContext.ObjectInstance, null);
-            var validatorIds = validators.Split('|');
-            foreach (var validatorId in validatorIds)
-            {
-                var validatorModel = WffmFieldFactory.GetValidator(validatorId);
-                if (validatorModel == null) continue;
+            var fieldId = (Guid)propertyId.GetValue(validationContext.ObjectInstance, null);
+            ID id;
+            ID.TryParse(fieldId, out id);
 
-                var validator = GetValidator(validatorModel);
-                if (validator != null)
-                {
-                    bool isValid = validator.Validate(value as string);
-                    return isValid ? ValidationResult.Success : new ValidationResult(ErrorMessage);
-                }
+            var fieldItem = Sitecore.Context.Database.Items[id];
+            var validators = WffmFieldFactory.GetValidators(fieldItem);
+
+            foreach (var validator in validators)
+            {
+                bool isValid = validator.Validate(value as string);
+                return isValid ? ValidationResult.Success : new ValidationResult(validator.Validator.ErrorMessage);
             }
 
             return ValidationResult.Success;
-        }
-
-        private IValidator GetValidator(Validator validatorModel)
-        {
-            var type = ReflectionUtil.GetTypeInfo(validatorModel.Assembly, validatorModel.Class);
-            bool isValidType = type != null && typeof (IValidator).IsAssignableFrom(type);
-            if (isValidType)
-            {
-                return Activator.CreateInstance(type, validatorModel.ValidationExpression) as IValidator;
-            }
-
-            return null;
         }
     }
 }

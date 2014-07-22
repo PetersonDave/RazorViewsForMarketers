@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using RazorViewsForMarketers.Configuration;
+using RazorViewsForMarketers.Core.Validators;
 using RazorViewsForMarketers.Models.Fields;
 using RazorViewsForMarketers.Models.Validators;
 using Sitecore.Data;
@@ -50,19 +51,15 @@ namespace RazorViewsForMarketers.Core
             var wffmField = genericFieldProperty.GetValue(wffmFieldInitializer, null) as WffmField;
 
             if (wffmField == null) return null;
-
             wffmField.Validators = GetValidators(field);
-            if (wffmField.Validators != null)
-            {
-                wffmField.ValidatorIds =  wffmField.Validators.Select(v => v.Item.ID.Guid.ToString()).Aggregate((i, j) => i + "|" + j);
-            }
+            wffmField.Id = field.ID.Guid;
 
             return wffmField;
         }
 
-        public static IEnumerable<Validator> GetValidators(Item field)
+        public static IEnumerable<IValidator> GetValidators(Item field)
         {
-            var validators = new List<Validator>();
+            var validators = new List<IValidator>();
 
             ReferenceField fieldLink = field.Fields["Field Link"];
             if (fieldLink == null || fieldLink.TargetItem == null) return null;
@@ -79,7 +76,7 @@ namespace RazorViewsForMarketers.Core
             return validators;
         }
 
-        public static Validator GetValidator(string validatorId)
+        public static IValidator GetValidator(string validatorId)
         {
             ID id;
             bool isValid = ID.TryParse(validatorId, out id);
@@ -88,7 +85,7 @@ namespace RazorViewsForMarketers.Core
             return GetValidator(id);
         }
 
-        public static Validator GetValidator(Guid validatorId)
+        public static IValidator GetValidator(Guid validatorId)
         {
             ID id;
             bool isValid = ID.TryParse(validatorId, out id);
@@ -97,14 +94,16 @@ namespace RazorViewsForMarketers.Core
             return GetValidator(id);
         }
 
-        public static Validator GetValidator(ID validatorId)
+        public static IValidator GetValidator(ID validatorId)
         {
             var validatorItem = Sitecore.Context.Database.Items[validatorId];
             if (validatorItem == null) return null;
 
             if (!ValidatorResolver.Current.ContainsKey(validatorItem.Name)) throw new Exception(string.Format("Validator name {0} does not exist in validator config", validatorItem.Name));
 
-            Type fieldType = ValidatorResolver.Current[validatorItem.Name];
+            var definition = ValidatorResolver.Current[validatorItem.Name];
+
+            Type fieldType = definition.ValidatorInitializer;
             if (fieldType == null) return null;
 
             var wffmFieldInitializer = Activator.CreateInstance(fieldType, validatorItem);
@@ -113,7 +112,13 @@ namespace RazorViewsForMarketers.Core
             PropertyInfo genericFieldProperty = wffmFieldInitializer.GetType().GetProperty("Validator");
             var wffmValidator = genericFieldProperty.GetValue(wffmFieldInitializer, null) as Validator;
 
-            return wffmValidator;
+            Type validatorType = definition.Validator;
+            if (validatorType == null) return null;
+
+            var varlidator = Activator.CreateInstance(validatorType, wffmValidator) as IValidator;
+            if (varlidator == null) return null;
+
+            return varlidator;
         }
 
         //private void PopulateValidators(Item fieldLinkItem, Validator wffmField)

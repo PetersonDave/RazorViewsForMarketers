@@ -1,6 +1,6 @@
 namespace RazorViewsForMarketers.Models.Validators
 {
-    public class GenericValidator : Validator
+    public class GenericValidatorModel : Validator
     {
     }
 }

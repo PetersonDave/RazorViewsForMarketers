@@ -3,7 +3,7 @@
 @inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.CreditCardField>
 
 <div class="field">
-    @Html.HiddenFor(model => model.ValidatorIds)
+    @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.IsRequired)
     @Html.Hidden("ModelType", Model.ModelType)
     

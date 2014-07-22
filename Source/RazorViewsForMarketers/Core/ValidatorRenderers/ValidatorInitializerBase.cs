@@ -7,6 +7,8 @@ using Sitecore.Collections;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Form.Core.Utility;
+using Sitecore.Forms.Core.Crm;
+using Sitecore.Shell.Feeds.Sections;
 
 namespace RazorViewsForMarketers.Core.ValidatorRenderers
 {
@@ -50,6 +52,11 @@ namespace RazorViewsForMarketers.Core.ValidatorRenderers
 
             wffmValidator.ValidatorDisplay = validatorItem.Fields["Validator Display"].Value;
             wffmValidator.Item = validatorItem;
+
+            if (validatorItem.Fields["Validation Expression"] != null)
+            {
+                wffmValidator.ValidationExpression = validatorItem.Fields["Validation Expression"].Value;    
+            }
         }
 
         private void PopulateCommonParameters(Validator wffmValidator)
