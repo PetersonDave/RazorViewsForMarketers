@@ -4,7 +4,7 @@ Razor Views For Marketers
 Razor Views for Marketers is a razor view rendering engine for Web Forms For Marketers. 
 
 ##Blade
-Through Blade, we're able to use MVC-style razor views and model binding to take full control over Web Forms for Marketers rendered markup. This form of templating gives full control to developers via strongly-typed views and view models.
+Through [Blade](https://github.com/kamsar/Blade), we're able to use MVC-style razor views and model binding to take full control over Web Forms for Marketers rendered markup. This form of templating gives full control to developers via strongly-typed views and view models.
 
 The following is fully customizable, all without losing the flexibility Web Forms for Marketers provides content editors. It also works with Sitecore's Page Editor.
 
@@ -26,7 +26,7 @@ Since Web Forms for Marketers is completely data-driven, field types must be dyn
 
 _note: nuget package to be created to replace manual steps below_
 
-1. Install Blade.
+1. [Install Blade](https://github.com/kamsar/Blade/wiki/Installation).
 2. Add a reference to ```RazorViewsForMarketers``` (or copy dll to bin).
 3. Copy ```/App_Config/Include/RazorViewsForMarketers.config``` into includes folder.
 4. Update ```global.asax``` for dynamic model binding:
@@ -52,14 +52,16 @@ _note: nuget package to be created to replace manual steps below_
 5. Copy ```/Views/*``` to website root.
 6. In Sitecore, install package ```/Packages/Razor-Views-For-Marketers-Rendering.zip```.
 7. Add a Razor Views for Marketers rendering to the presentation details of an item.
+   ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Presentation-Details.png)
 8. Set its datasource to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
+   ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Form-Datasource.png)
 9. Publish.
 
 ##How to Contribute
 
 ###Creating New Fields
 
-1. Create a Field Model
+Step 1. Create a Field Model
    
    ```c#
    namespace RazorViewsForMarketers.Models.Fields
@@ -68,7 +70,7 @@ _note: nuget package to be created to replace manual steps below_
    }
    ```
    
-2. Create a Field Initializer
+Step 2. Create a Field Initializer
    
    The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
    
@@ -94,7 +96,7 @@ _note: nuget package to be created to replace manual steps below_
    }
    ```
    
-3. Create a Validator (if needed)
+Step 3. Create a Validator (if needed)
    ```c#
    namespace RazorViewsForMarketers.Core.Validators
    {
@@ -120,7 +122,7 @@ _note: nuget package to be created to replace manual steps below_
    }
    ```
    
-4. Create the Field View
+Step 4. Create the Field View
    
    Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
    
@@ -149,7 +151,7 @@ _note: nuget package to be created to replace manual steps below_
    </div>
    ```
    
-5. Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
+Step 5. Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
    
    ```xml
    <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
