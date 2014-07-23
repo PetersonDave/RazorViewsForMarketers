@@ -6,6 +6,8 @@ Razor Views for Marketers is a razor view rendering engine for Web Forms For Mar
 ##Blade
 Through [Blade](https://github.com/kamsar/Blade), we're able to use MVC-style razor views and model binding to take full control over Web Forms for Marketers rendered markup. This form of templating gives full control to developers via strongly-typed views and view models.
 
+##Customizable Forms
+
 The following is fully customizable, all without losing the flexibility Web Forms for Marketers provides content editors. It also works with Sitecore's Page Editor.
 
 * Rendering of a Web Forms for Marketers form
@@ -55,7 +57,7 @@ _note: nuget package to be created to replace manual steps below_
 6. In Sitecore, install package ```/Packages/Razor-Views-For-Marketers-Rendering.zip```.
 7. Add a Razor Views for Marketers rendering to the presentation details of an item.
    ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Presentation-Details.png)
-8. Set its datasource to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
+8. Set its Data Source to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
    ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Form-Datasource.png)
 9. Publish.
 
@@ -63,7 +65,7 @@ _note: nuget package to be created to replace manual steps below_
 
 ###Creating New Fields
 
-Step 1. Create a Field Model
+**Step 1:** Create a Field Model
    
    ```c#
    namespace RazorViewsForMarketers.Models.Fields
@@ -72,11 +74,11 @@ Step 1. Create a Field Model
    }
    ```
    
-Step 2. Create a Field Initializer
+**Step 2:** Create a Field Initializer
    
    The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
    
-   For an example implementation, check out the DropListField.
+   For an example implementation, check out the [DropListField](https://github.com/PetersonDave/RazorViewsForMarketers/blob/master/Source/RazorViewsForMarketers/Core/FieldRenderers/DropListInitializer.cs).
    
    ```c#
    namespace RazorViewsForMarketers.Core.FieldRenderers
@@ -98,7 +100,7 @@ Step 2. Create a Field Initializer
    }
    ```
    
-Step 3. Create a Validator (if needed)
+**Step 3:** Create a Validator _(if needed)_
    ```c#
    namespace RazorViewsForMarketers.Core.Validators
    {
@@ -124,7 +126,7 @@ Step 3. Create a Validator (if needed)
    }
    ```
    
-Step 4. Create the Field View
+**Step 4:** Create the Field View
    
    Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
    
@@ -153,7 +155,7 @@ Step 4. Create the Field View
    </div>
    ```
    
-Step 5. Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
+**Step 5:** Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
    
    ```xml
    <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
