@@ -60,134 +60,134 @@ _note: nuget package to be created to replace manual steps below_
 ###Creating New Fields
 
 1. Create a Field Model
-
-```c#
-namespace RazorViewsForMarketers.Models.Fields
-{
-    public class SingleLineTextField : WffmField { }
-}
-```
-
+   
+   ```c#
+   namespace RazorViewsForMarketers.Models.Fields
+   {
+       public class SingleLineTextField : WffmField { }
+   }
+   ```
+   
 2. Create a Field Initializer
-
-The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
-
-For an example implementation, check out the DropListField.
-
-```c#
-namespace RazorViewsForMarketers.Core.FieldRenderers
-{
-    public class SingleLineTextFieldInitializer : FieldInitializerBase<SingleLineTextField>
-    {
-        public SingleLineTextFieldInitializer(Item fieldItem) : base(fieldItem) { }
-
-        public override void PopulateParameters(Field field, SingleLineTextField model)
-        {
-            // Logic here to parse "Parameters" field of WFFM field item
-        }
-
-        public override void PopulateLocalizedParameters(Field field, SingleLineTextField model)
-        {
-            // Logic here to parse "Localized Parameters" field of WFFM field item
-        }
-    }
-}
-```
-
+   
+   The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
+   
+   For an example implementation, check out the DropListField.
+   
+   ```c#
+   namespace RazorViewsForMarketers.Core.FieldRenderers
+   {
+       public class SingleLineTextFieldInitializer : FieldInitializerBase<SingleLineTextField>
+       {
+           public SingleLineTextFieldInitializer(Item fieldItem) : base(fieldItem) { }
+   
+           public override void PopulateParameters(Field field, SingleLineTextField model)
+           {
+               // Logic here to parse "Parameters" field of WFFM field item
+           }
+   
+           public override void PopulateLocalizedParameters(Field field, SingleLineTextField model)
+           {
+               // Logic here to parse "Localized Parameters" field of WFFM field item
+           }
+       }
+   }
+   ```
+   
 3. Create a Validator (if needed)
-```c#
-namespace RazorViewsForMarketers.Core.Validators
-{
-    public class GenericValidator : IValidator
-    {
-        public GenericValidatorModel Validator { get; set; }
-
-        public GenericValidator(GenericValidatorModel model)
-        {
-            Validator = model;
-        }
-
-        public bool Validate(string value)
-        {
-            bool canValidate = Validator != null &&
-							   !string.IsNullOrEmpty(Validator.ValidationExpression);
-            if (!canValidate) return true;
-
-            var regEx = new Regex(Validator.ValidationExpression);
-            return regEx.IsMatch(value);
-        }
-    }
-}
-```
-
+   ```c#
+   namespace RazorViewsForMarketers.Core.Validators
+   {
+       public class GenericValidator : IValidator
+       {
+           public GenericValidatorModel Validator { get; set; }
+   
+           public GenericValidator(GenericValidatorModel model)
+           {
+               Validator = model;
+           }
+   
+           public bool Validate(string value)
+           {
+                  bool canValidate = Validator != null &&
+							      !string.IsNullOrEmpty(Validator.ValidationExpression);
+               if (!canValidate) return true;
+   
+               var regEx = new Regex(Validator.ValidationExpression);
+               return regEx.IsMatch(value);
+           }
+       }
+   }
+   ```
+   
 4. Create the Field View
-
-Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
-
-Helper methods exist for generating Page Editor friendly labels and required field indicators.
-
-```html
-@using System.Web.Mvc.Html
-@using RazorViewsForMarketers.Helpers
-@inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
-
-<div class="field">
-    <!-- model binding fields -->
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.IsRequired)
-    @Html.Hidden("ModelType", Model.ModelType)
-    <!-- model binding fields -->
-
-    @BladeHtmlHelper.SitecoreLabel(Html, model => model)
-
-    @Html.TextBoxFor(model => model.Response)
-    @BladeHtmlHelper.RequiredIndicator(model => model)
-
-    <p>@Model.Information</p>
-
-    @Html.ValidationMessageFor(model => model.Response)
-</div>
-```
-
+   
+   Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
+   
+   Helper methods exist for generating Page Editor friendly labels and required field indicators.
+   
+   ```html
+   @using System.Web.Mvc.Html
+   @using RazorViewsForMarketers.Helpers
+   @inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
+   
+   <div class="field">
+       <!-- model binding fields -->
+       @Html.HiddenFor(model => model.Id)
+       @Html.HiddenFor(model => model.IsRequired)
+       @Html.Hidden("ModelType", Model.ModelType)
+       <!-- model binding fields -->
+   
+       @BladeHtmlHelper.SitecoreLabel(Html, model => model)
+   
+       @Html.TextBoxFor(model => model.Response)
+       @BladeHtmlHelper.RequiredIndicator(model => model)
+   
+       <p>@Model.Information</p>
+   
+       @Html.ValidationMessageFor(model => model.Response)
+   </div>
+   ```
+   
 5. Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
-
-```xml
-<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
-  <sitecore>
-    <rvfm>
-      <fields>
-		...
-        <field 
-			name="Single-Line Text" 
-			type="RazorViewsForMarketers.Core.FieldRenderers.SingleLineTextFieldInitializer" />
-		...
-      </fields>
-      <validators>
-		...
-        <validator 
-			name="Regex Pattern" 
-			type="RazorViewsForMarketers.Core.ValidatorRenderers.GenericValidatorInitializer" 
-			validator="RazorViewsForMarketers.Core.Validators.GenericValidator" />
-		...
-      </validators>
-    </rvfm>
-  </sitecore>
-</configuration>
-```
-
-**Field Config Reference**
-
-Attribute | Description
---- | ---
-name | Field item name as defined within Sitecore
-type | Field model initializer object (created in step 2)
-
-**Validator Config Reference**
-
-Attribute | Description
---- | ---
-name | Web Forms for Marketers validator item name as defined within Sitecore
-type | Validator model initializer object
-validator | Validator object (created in step 3)
-
-Note: validator type is typically always going to be GenericValidatorInitializer. However, this is fully customizable as well.
+   
+   ```xml
+   <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+     <sitecore>
+       <rvfm>
+         <fields>
+		   ...
+           <field 
+   			   name="Single-Line Text" 
+			   type="RazorViewsForMarketers.Core.FieldRenderers.SingleLineTextFieldInitializer" />
+		   ...
+         </fields>
+         <validators>
+		   ...
+           <validator 
+   			   name="Regex Pattern" 
+			   type="RazorViewsForMarketers.Core.ValidatorRenderers.GenericValidatorInitializer" 
+			   validator="RazorViewsForMarketers.Core.Validators.GenericValidator" />
+		   ...
+         </validators>
+       </rvfm>
+     </sitecore>
+   </configuration>
+   ```
+   
+   **Field Config Reference**
+   
+   Attribute | Description
+   --- | ---
+   name | Field item name as defined within Sitecore
+   type | Field model initializer object (created in step 2)
+   
+   **Validator Config Reference**
+   
+   Attribute | Description
+   --- | ---
+   name | Web Forms for Marketers validator item name as defined within Sitecore
+   type | Validator model initializer object
+   validator | Validator object (created in step 3)
+   
+   Note: validator type is typically always going to be GenericValidatorInitializer. However, this is fully customizable as well.
