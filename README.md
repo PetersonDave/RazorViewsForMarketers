@@ -1,36 +1,54 @@
 Razor Views For Marketers
 ======================
 
-Razor Views for Marketers is a razor view rendering engine for Web Forms For Marketers. Through Blade, we're able to use MVC-style razor views and model binding to take full control over Web Forms for Marketers rendered markup.
+Razor Views for Marketers is a razor view rendering engine for Web Forms For Marketers. 
 
 ##Blade
+Through Blade, we're able to use MVC-style razor views and model binding to take full control over Web Forms for Marketers rendered markup. This form of templating gives full control to developers via strongly-typed views and view models.
 
-By leveraging blade, we're able to use a templating format to define how the form, field sections and fields are rendered. This allows the developer to take full control of field-specific formatting through strongly-typed views and models. 
+The following is fully customizable, all without losing the flexibility Web Forms for Marketers provides content editors. It also works with Sitecore's Page Editor.
+
+* Rendering of a Web Forms for Marketers form
+* Field sections
+* Fields
+* Field validators
+
+The following is replaced by this library:
+
+* Web Forms for Marketers Field rendering - Field rendering is completely replaced by the razor views in this library.
+* Validation - Given the MVC approach with Razor views, existing Web Forms for Marketers validators will not work.
 
 ##Dynamic Model Binding
 
-Since Web Forms for Marketers is completely data-driven, field types must be dynamically driven at runtime. A combination of dynamic model binding and MVC editor templates provide full customization for already supported Web Forms for Marketers fields and any new custom field types.
+Since Web Forms for Marketers is completely data-driven, field types must be dynamically driven at runtime. A combination of dynamic model binding and MVC editor templates provide full customization for already supported Web Forms for Marketers fields. Adding completely new fields is supported as well.
 
 ##Getting Started
 
-_note: nuget package to be created toreplace manual steps below_
+_note: nuget package to be created to replace manual steps below_
 
 1. Install Blade.
 2. Add a reference to ```RazorViewsForMarketers``` (or copy dll to bin).
 3. Copy ```/App_Config/Include/RazorViewsForMarketers.config``` into includes folder.
 4. Update ```global.asax``` for dynamic model binding:
 
-```c#
-    public void Application_Start()
-    {
-        // provider overrides
-        ModelMetadataProviders.Current = new CustomModelMetadataProvider();
-
-        // model binding overrides
-        ModelBinders.Binders.Add(typeof(WffmField), new WffmFieldModelBinder());
-    }
-```
-
+   ```c#
+   <%@Application Language='C#' Inherits="Sitecore.Web.Application" %>
+   <%@ Import Namespace="RazorViewsForMarketers.ModelBinding" %>
+   <%@ Import Namespace="RazorViewsForMarketers.Models.Fields" %>
+   <%@ Import Namespace="RazorViewsForMarketers.Providers" %>
+   
+   <script RunAt="server">
+       public void Application_Start()
+       {
+           // provider overrides
+           ModelMetadataProviders.Current = new CustomModelMetadataProvider();
+   
+           // model binding overrides
+           ModelBinders.Binders.Add(typeof(WffmField), new WffmFieldModelBinder());
+       }
+   </script>
+   ```
+   
 5. Copy ```/Views/*``` to website root.
 6. In Sitecore, install package ```/Packages/Razor-Views-For-Marketers-Rendering.zip```.
 7. Add a Razor Views for Marketers rendering to the presentation details of an item.
@@ -91,7 +109,8 @@ namespace RazorViewsForMarketers.Core.Validators
 
         public bool Validate(string value)
         {
-            bool canValidate = Validator != null && !string.IsNullOrEmpty(Validator.ValidationExpression);
+            bool canValidate = Validator != null &&
+							   !string.IsNullOrEmpty(Validator.ValidationExpression);
             if (!canValidate) return true;
 
             var regEx = new Regex(Validator.ValidationExpression);
@@ -159,12 +178,14 @@ Helper methods exist for generating Page Editor friendly labels and required fie
 *Config Key*
 
 *Field*
+
 Attribute | Description
 --- | ---
 name | Field item name as defined within Sitecore
 type | Field model initializer object (created in step 2)
 
 *Validator*
+
 Attribute | Description
 --- | ---
 name | Web Forms for Marketers validator item name as defined within Sitecore
