@@ -15,8 +15,10 @@ The following is fully customizable, all without losing the flexibility Web Form
 
 The following is replaced by this library:
 
-* Web Forms for Marketers Field rendering - Field rendering is completely replaced by the razor views in this library.
-* Validation - Given the MVC approach with Razor views, existing Web Forms for Marketers validators will not work.
+* Web Forms for Marketers Field rendering
+  * Field rendering is completely replaced by the razor views in this library.
+* Validation
+  * Given the MVC approach with Razor views, existing Web Forms for Marketers validators will not work.
 
 ##Dynamic Model Binding
 
