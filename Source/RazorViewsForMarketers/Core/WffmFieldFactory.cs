@@ -120,38 +120,5 @@ namespace RazorViewsForMarketers.Core
 
             return varlidator;
         }
-
-        //private void PopulateValidators(Item fieldLinkItem, Validator wffmField)
-        //{
-        //    var validators = new List<Validator>();
-
-        //    MultilistField validation = fieldLinkItem.Fields["validation"];
-        //    if (validation == null || !validation.TargetIDs.Any()) return;
-
-        //    foreach (var target in validation.TargetIDs)
-        //    {
-        //        var validatorItem = fieldLinkItem.Database.Items[target];
-        //        if (validatorItem == null) continue;
-
-        //        CheckboxField enableClientScript = validatorItem.Fields["Enable Client Script"];
-
-        //        var validator = new Validator()
-        //        {
-        //            AnalyticsFieldEvent = validatorItem.Fields["Field Event"].Value,
-        //            Assembly = validatorItem.Fields["Assembly"].Value,
-        //            Class = validatorItem.Fields["Class"].Value,
-        //            EnableClientScript = enableClientScript.Checked,
-        //            ErrorMessage = validatorItem.Fields["Error Message"].Value,
-        //            Text = validatorItem.Fields["Text"].Value,
-        //            ValidationExpression = validatorItem.Fields["Validation Expression"].Value,
-        //            ValidatorDisplay = validatorItem.Fields["Validator Display"].Value
-        //        };
-
-        //        validators.Add(validator);
-        //    }
-
-        //    wffmField.Validators = validators;
-        //}
-
     }
 }
