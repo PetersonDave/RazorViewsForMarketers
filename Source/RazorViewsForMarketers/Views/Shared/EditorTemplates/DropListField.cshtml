@@ -1,12 +1,15 @@
-﻿@using System.Web.Mvc.Html
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
 @using RazorViewsForMarketers.Helpers
 @inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.DropListField>
 
 <div class="field">
+    <!-- model binding fields -->
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.IsRequired)
     @Html.Hidden("ModelType", Model.ModelType)
-    
+    <!-- model binding fields -->
+
     @BladeHtmlHelper.SitecoreLabel(Html, model => model)
 
     @Html.DropDownListFor(model => model.Response, new SelectList(Model.Items))

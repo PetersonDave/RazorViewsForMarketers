@@ -1,5 +1,6 @@
-using RazorViewsForMarketers.Models.Fields;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using CheckboxField = RazorViewsForMarketers.Models.Fields.CheckboxField;
 
 namespace RazorViewsForMarketers.Core.FieldRenderers
 {
@@ -7,12 +8,12 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
     {
         public CheckBoxInitializer(Item fieldItem) : base(fieldItem) { }
 
-        public override void PopulateParameters(CheckboxField field)
+        public override void PopulateParameters(Field field, CheckboxField model)
         {
 
         }
 
-        public override void PopulateLocalizedParameters(CheckboxField field)
+        public override void PopulateLocalizedParameters(Field field, CheckboxField model)
         {
 
         }

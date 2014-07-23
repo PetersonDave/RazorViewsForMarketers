@@ -1,4 +1,5 @@
 using RazorViewsForMarketers.Models.Fields;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 
 namespace RazorViewsForMarketers.Core.FieldRenderers
@@ -7,12 +8,12 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
     {
         public ListBoxInitializer(Item fieldItem) : base(fieldItem) { }
 
-        public override void PopulateParameters(ListBoxField field)
+        public override void PopulateParameters(Field field, ListBoxField model)
         {
 
         }
 
-        public override void PopulateLocalizedParameters(ListBoxField field)
+        public override void PopulateLocalizedParameters(Field field, ListBoxField model)
         {
 
         }

@@ -13,8 +13,8 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
 {
     public abstract class FieldInitializerBase<T> where T : WffmField
     {
-        public abstract void PopulateParameters(T field);
-        public abstract void PopulateLocalizedParameters(T field);
+        public abstract void PopulateParameters(Field field, T model);
+        public abstract void PopulateLocalizedParameters(Field field, T model);
         public T Field { get; set; }
 
         protected FieldInitializerBase() { }
@@ -34,8 +34,17 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
             PopulateCommonParameters(theField);
             PopulateCommonLocalizedParameters(theField);
 
-            PopulateParameters(theField);
-            PopulateLocalizedParameters(theField);
+            var parameters = fieldItem.Fields["Parameters"];
+            if (parameters.HasValue)
+            {
+                PopulateParameters(parameters, theField);
+            }
+
+            var localizedParameters = fieldItem.Fields["Localized Parameters"];
+            if (localizedParameters.HasValue)
+            {
+                PopulateLocalizedParameters(localizedParameters, theField);
+            }
 
             Field = theField;
         }

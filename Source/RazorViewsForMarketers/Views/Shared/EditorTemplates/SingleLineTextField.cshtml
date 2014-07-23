@@ -3,10 +3,12 @@
 @inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
 
 <div class="field">
+    <!-- model binding fields -->
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.IsRequired)
     @Html.Hidden("ModelType", Model.ModelType)
-    
+    <!-- model binding fields -->
+
     @BladeHtmlHelper.SitecoreLabel(Html, model => model)
 
     @Html.TextBoxFor(model => model.Response)

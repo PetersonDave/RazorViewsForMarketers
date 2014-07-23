@@ -1,4 +1,5 @@
 using RazorViewsForMarketers.Models.Fields;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 
 namespace RazorViewsForMarketers.Core.FieldRenderers
@@ -7,12 +8,12 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
     {
         public MultipleLineTextFieldInitializer(Item fieldItem) : base(fieldItem) { }
 
-        public override void PopulateParameters(MultipleLineTextField field)
+        public override void PopulateParameters(Field field, MultipleLineTextField model)
         {
 
         }
 
-        public override void PopulateLocalizedParameters(MultipleLineTextField field)
+        public override void PopulateLocalizedParameters(Field field, MultipleLineTextField model)
         {
 
         }

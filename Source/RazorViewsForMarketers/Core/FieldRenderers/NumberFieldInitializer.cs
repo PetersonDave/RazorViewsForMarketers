@@ -1,4 +1,5 @@
 using RazorViewsForMarketers.Models.Fields;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 
 namespace RazorViewsForMarketers.Core.FieldRenderers
@@ -7,12 +8,12 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
     {
         public NumberFieldInitializer(Item fieldItem) : base(fieldItem) { }
 
-        public override void PopulateParameters(NumberField field)
+        public override void PopulateParameters(Field field, NumberField model)
         {
 
         }
 
-        public override void PopulateLocalizedParameters(NumberField field)
+        public override void PopulateLocalizedParameters(Field field, NumberField model)
         {
 
         }
