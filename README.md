@@ -76,7 +76,7 @@ _note: nuget package to be created to replace manual steps below_
    
 **Step 2:** Create a Field Initializer
    
-   The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
+   The field initializer's role is to fill the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating both ```Parameters``` and ```Localized Parameters``` fields.
    
    For an example implementation, check out the [DropListField](https://github.com/PetersonDave/RazorViewsForMarketers/blob/master/Source/RazorViewsForMarketers/Core/FieldRenderers/DropListInitializer.cs).
    
@@ -115,7 +115,7 @@ _note: nuget package to be created to replace manual steps below_
    
            public bool Validate(string value)
            {
-                  bool canValidate = Validator != null &&
+               bool canValidate = Validator != null &&
 							      !string.IsNullOrEmpty(Validator.ValidationExpression);
                if (!canValidate) return true;
    
@@ -128,7 +128,7 @@ _note: nuget package to be created to replace manual steps below_
    
 **Step 4:** Create the Field View
    
-   Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
+   Take note of the model binding fields within comments below. These are required for dynamic model binding to work successfully bind on postback.
    
    Helper methods exist for generating Page Editor friendly labels and required field indicators.
    
@@ -196,4 +196,4 @@ _note: nuget package to be created to replace manual steps below_
    type | Validator model initializer object
    validator | Validator object (created in step 3)
    
-   Note: validator type is typically always going to be GenericValidatorInitializer. However, this is fully customizable as well.
+   _Note: validator type is typically always going to be GenericValidatorInitializer. However, this is fully customizable as well._
