@@ -3,6 +3,7 @@
     public enum EDropListParametersType
     {
         Items,
-        SelectedValue
+        SelectedValue,
+        EmptyChoice
     }
 }

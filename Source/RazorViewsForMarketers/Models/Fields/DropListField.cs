@@ -1,8 +1,10 @@
-﻿namespace RazorViewsForMarketers.Models.Fields
+﻿using System.Collections.Specialized;
+
+namespace RazorViewsForMarketers.Models.Fields
 {
     public class DropListField : WffmField
     {
-        public string Items { get; set; }
+        public NameValueCollection Items { get; set; }
         public string SelectedValue { get; set; }
     }
 }

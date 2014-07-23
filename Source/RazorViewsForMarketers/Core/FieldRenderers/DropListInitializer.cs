@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using RazorViewsForMarketers.Core.FieldRenderers.EnumerationTypes;
 using RazorViewsForMarketers.Models.Fields;
-using RazorViewsForMarketers.Presenters;
 using Sitecore.Collections;
 using Sitecore.Data.Items;
 using Sitecore.Form.Core.Utility;
@@ -35,16 +35,22 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
                                 var querySettings = QuerySettings.ParseRange(pair.Part2);
                                 var dataSource = QueryManager.Select(querySettings);
 
-                                // TODO: continue processing
+                                field.Items = new NameValueCollection {{"", ""}, dataSource};       // default to empty choice as setting may not always be in XML
                             }
                             break;
                         case EDropListParametersType.SelectedValue:
                             field.SelectedValue = pair.Part2;
                             break;
+                        case EDropListParametersType.EmptyChoice:
+                            bool noEmptyChoice = !string.IsNullOrEmpty(pair.Part2) && pair.Part2.ToLower().Equals("no");
+                            if (noEmptyChoice)
+                            {
+                                field.Items.Remove("");
+                            }
+                            break;
                     }
                 }
             }
-
         }
 
         public override void PopulateLocalizedParameters(DropListField field)
