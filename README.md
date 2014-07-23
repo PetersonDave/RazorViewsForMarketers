@@ -15,10 +15,10 @@ Since Web Forms for Marketers is completely data-driven, field types must be dyn
 
 _note: nuget package to be created toreplace manual steps below_
 
-1. Install Blade
-2. Add a reference to RazordViewsForMarketers (or copy dll to bin)
-3. Copy _/App_Config/Include/RazorViewsForMarketers.config_ into includes folder.
-4. Update global.asax for dynamic model binding:
+1. Install Blade.
+2. Add a reference to ```RazorViewsForMarketers``` (or copy dll to bin).
+3. Copy ```/App_Config/Include/RazorViewsForMarketers.config``` into includes folder.
+4. Update ```global.asax``` for dynamic model binding:
 
 ```c#
     public void Application_Start()
@@ -31,9 +31,142 @@ _note: nuget package to be created toreplace manual steps below_
     }
 ```
 
-5. Copy _/Views/*_ to website root
-6. In Sitecore, install package /Packages/Razor-Views-For-Marketers-Rendering.zip
-7. Add 
+5. Copy ```/Views/*``` to website root.
+6. In Sitecore, install package ```/Packages/Razor-Views-For-Marketers-Rendering.zip```.
+7. Add a Razor Views for Marketers rendering to the presentation details of an item.
+8. Set its datasource to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
+9. Publish.
 
 ##How to Contribute
 
+###Creating New Fields
+
+1. Create a Field Model
+
+```c#
+namespace RazorViewsForMarketers.Models.Fields
+{
+    public class SingleLineTextField : WffmField { }
+}
+```
+
+2. Create a Field Initializer
+
+The field initializer's role is to fills the model with content from the Web Forms for Marketers Field item. Overridable methods exist for populating from both ```Parameters``` and ```Localized Parameters``` fields.
+
+For an example implementation, check out the DropListField.
+
+```c#
+namespace RazorViewsForMarketers.Core.FieldRenderers
+{
+    public class SingleLineTextFieldInitializer : FieldInitializerBase<SingleLineTextField>
+    {
+        public SingleLineTextFieldInitializer(Item fieldItem) : base(fieldItem) { }
+
+        public override void PopulateParameters(Field field, SingleLineTextField model)
+        {
+            // Logic here to parse "Parameters" field of WFFM field item
+        }
+
+        public override void PopulateLocalizedParameters(Field field, SingleLineTextField model)
+        {
+            // Logic here to parse "Localized Parameters" field of WFFM field item
+        }
+    }
+}
+```
+
+3. Create a Validator (if needed)
+```c#
+namespace RazorViewsForMarketers.Core.Validators
+{
+    public class GenericValidator : IValidator
+    {
+        public GenericValidatorModel Validator { get; set; }
+
+        public GenericValidator(GenericValidatorModel model)
+        {
+            Validator = model;
+        }
+
+        public bool Validate(string value)
+        {
+            bool canValidate = Validator != null && !string.IsNullOrEmpty(Validator.ValidationExpression);
+            if (!canValidate) return true;
+
+            var regEx = new Regex(Validator.ValidationExpression);
+            return regEx.IsMatch(value);
+        }
+    }
+}
+```
+
+4. Create the Field View
+
+Take note of the model binding fields. These are required for dynamic model binding to work successfully on postback.
+
+Helper methods exist for generating Page Editor friendly labels and required field indicators.
+
+```html
+@using System.Web.Mvc.Html
+@using RazorViewsForMarketers.Helpers
+@inherits BladeRazorRenderingEditorTemplate<RazorViewsForMarketers.Models.Fields.SingleLineTextField>
+
+<div class="field">
+    <!-- model binding fields -->
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.IsRequired)
+    @Html.Hidden("ModelType", Model.ModelType)
+    <!-- model binding fields -->
+
+    @BladeHtmlHelper.SitecoreLabel(Html, model => model)
+
+    @Html.TextBoxFor(model => model.Response)
+    @BladeHtmlHelper.RequiredIndicator(model => model)
+
+    <p>@Model.Information</p>
+
+    @Html.ValidationMessageFor(model => model.Response)
+</div>
+```
+
+5. Wire it all up in ```/App_Config/Include/RazorViewsForMarketers.config```
+
+```xml
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+    <rvfm>
+      <fields>
+		...
+        <field 
+			name="Single-Line Text" 
+			type="RazorViewsForMarketers.Core.FieldRenderers.SingleLineTextFieldInitializer" />
+		...
+      </fields>
+      <validators>
+		...
+        <validator 
+			name="Regex Pattern" 
+			type="RazorViewsForMarketers.Core.ValidatorRenderers.GenericValidatorInitializer" 
+			validator="RazorViewsForMarketers.Core.Validators.GenericValidator" />
+		...
+      </validators>
+    </rvfm>
+  </sitecore>
+</configuration>
+```
+
+*Config Key*
+
+*Field*
+Attribute | Description
+--- | ---
+name | Field item name as defined within Sitecore
+type | Field model initializer object (created in step 2)
+
+*Validator*
+Attribute | Description
+--- | ---
+name | Web Forms for Marketers validator item name as defined within Sitecore
+type | Validator model initializer object (typically always going to be GenericValidatorInitializer)
+validator | Validator object (created in step 3)
