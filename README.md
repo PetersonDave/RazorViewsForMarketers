@@ -175,19 +175,19 @@ Helper methods exist for generating Page Editor friendly labels and required fie
 </configuration>
 ```
 
-*Config Key*
-
-*Field*
+**Field Config Reference**
 
 Attribute | Description
 --- | ---
 name | Field item name as defined within Sitecore
 type | Field model initializer object (created in step 2)
 
-*Validator*
+**Validator Config Reference**
 
 Attribute | Description
 --- | ---
 name | Web Forms for Marketers validator item name as defined within Sitecore
-type | Validator model initializer object (typically always going to be GenericValidatorInitializer)
+type | Validator model initializer object
 validator | Validator object (created in step 3)
+
+Note: validator type is typically always going to be GenericValidatorInitializer. However, this is fully customizable as well.
