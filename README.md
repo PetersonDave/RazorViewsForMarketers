@@ -27,8 +27,11 @@ The following is replaced by this library:
 Since Web Forms for Marketers is completely data-driven, field types must be dynamically driven at runtime. A combination of dynamic model binding and MVC editor templates provide full customization for already supported Web Forms for Marketers fields. Adding completely new fields is supported as well.
 
 ##Getting Started
-
+###Installation
 _note: nuget package to be created to replace manual steps below_
+
+
+###Installing Manually
 
 1. [Install Blade](https://github.com/kamsar/Blade/wiki/Installation).
 2. Add a reference to ```RazorViewsForMarketers``` (or copy dll to bin).
@@ -55,11 +58,13 @@ _note: nuget package to be created to replace manual steps below_
    
 5. Copy ```/Views/*``` to website root.
 6. In Sitecore, install package ```/Packages/Razor-Views-For-Marketers-Rendering.zip```.
-7. Add a Razor Views for Marketers rendering to the presentation details of an item.
+
+###Adding a Razor Views for Marketers Rendering
+1. Add a Razor Views for Marketers rendering to the presentation details of an item.
    ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Presentation-Details.png)
-8. Set its Data Source to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
+2. Set its Data Source to a Web Forms for Marketers form, just as you would with Web Forms for Marketers.
    ![](https://github.com/PetersonDave/RazorViewsForMarketers/wiki/Images/Form-Datasource.png)
-9. Publish.
+3. Publish.
 
 ##How to Contribute
 
