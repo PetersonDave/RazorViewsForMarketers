@@ -3,16 +3,19 @@
 @using RazorViewsForMarketers.Helpers
 @inherits BladeRazorRendering<RazorViewsForMarketers.Models.RazorViewForMarketersFormModel>
 
-@BladeHelper.TextFor(model => model.Title)
+<h1>@Model.Form.Title</h1>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new {id = "razorViewForMarketers"}))
+@if (Model.Form.ShowIntroduction)
 {
-    <h2>Form</h2>
-    
+    <p>@Model.Form.Introduction</p>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "razorViewForMarketers" }))
+{
     @Html.DisplayTextFor(model => model.SubmitMessage)
-    
+
     <div class="form">
-        @Html.EditorFor(model => model.Form.Sections)    
+        @Html.EditorFor(model => model.Form.Sections)
     </div>
 
     <button type="submit" value="Submit" name="Command">Submit Form</button>
