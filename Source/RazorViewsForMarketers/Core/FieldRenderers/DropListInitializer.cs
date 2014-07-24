@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Web.UI.WebControls;
 using RazorViewsForMarketers.Core.FieldRenderers.EnumerationTypes;
 using RazorViewsForMarketers.Models.Fields;
 using Sitecore.Collections;
@@ -33,7 +34,15 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
                             var querySettings = QuerySettings.ParseRange(pair.Part2);
                             var dataSource = QueryManager.Select(querySettings);
 
-                            model.Items = new NameValueCollection { { "", "" }, dataSource };       // default to empty choice as setting may not always be in XML
+                            model.Items = new List<ListItem>()
+                            {
+                               new ListItem("", "")     // default to empty choice as setting may not always be in XML
+                            };
+
+                            foreach (var item in dataSource)
+                            {
+                                model.Items.Add(new ListItem(item.ToString(), item.ToString()));
+                            }
                         }
                         break;
                     case EDropListParametersType.SelectedValue:
@@ -43,7 +52,7 @@ namespace RazorViewsForMarketers.Core.FieldRenderers
                         bool noEmptyChoice = !string.IsNullOrEmpty(pair.Part2) && pair.Part2.ToLower().Equals("no");
                         if (noEmptyChoice)
                         {
-                            model.Items.Remove("");
+                            model.Items.RemoveAt(0);
                         }
                         break;
                 }

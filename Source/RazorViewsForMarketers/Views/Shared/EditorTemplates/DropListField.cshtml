@@ -8,6 +8,10 @@
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.IsRequired)
     @Html.Hidden("ModelType", Model.ModelType)
+    @for (var i = 0; i < Model.Items.Count; i++)
+    {
+        @Html.HiddenFor(x => x.Items[i].Value)
+    }
     <!-- model binding fields -->
 
     @BladeHtmlHelper.SitecoreLabel(Html, model => model)
