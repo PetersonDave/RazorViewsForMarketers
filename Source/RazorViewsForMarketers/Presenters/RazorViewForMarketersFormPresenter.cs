@@ -106,22 +106,11 @@ namespace RazorViewsForMarketers.Presenters
                     var source = model.Form.Sections[i].Fields[j];
                     var destination = data.Form.Sections[i].Fields[j];
 
-                    source.CssClass = destination.CssClass;
-                    source.Help = destination.Help;
-                    source.Information = destination.Information;
-                    source.IsRequired = destination.IsRequired;
-                    source.Item = destination.Item;
-                    source.MaximumLength = destination.MaximumLength;
-                    source.MinimumLength = destination.MinimumLength;
-                    source.PredefinedValidatorPattern = destination.PredefinedValidatorPattern;
-                    source.RegExPattern = destination.RegExPattern;
-                    source.Text = destination.Text;
-                    source.Title = destination.Title;
-                    source.Validators = destination.Validators;
+                    destination.Response = source.Response;
                 }
             }
 
-            var form = new ModifiedSimpleForm(model);
+            var form = new ModifiedSimpleForm(data);
             model.SubmitMessage = form.SubmitForm();
         }
     }

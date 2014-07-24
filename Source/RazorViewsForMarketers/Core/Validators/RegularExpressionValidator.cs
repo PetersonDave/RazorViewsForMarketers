@@ -14,6 +14,8 @@ namespace RazorViewsForMarketers.Core.Validators
 
         public bool Validate(string value)
         {
+            if (string.IsNullOrEmpty(value)) return true;
+
             bool canValidate = Validator != null && !string.IsNullOrEmpty(Validator.ValidationExpression);
             if (!canValidate) return true;
 

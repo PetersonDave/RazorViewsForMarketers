@@ -36,6 +36,7 @@ namespace RazorViewsForMarketers.ValidatorAttributes
 
             var fieldItem = Sitecore.Context.Database.Items[id];
             var validators = WffmFieldFactory.GetValidators(fieldItem);
+            if (validators == null) return ValidationResult.Success; 
 
             foreach (var validator in validators)
             {

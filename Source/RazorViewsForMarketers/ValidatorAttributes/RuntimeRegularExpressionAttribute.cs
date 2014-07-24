@@ -23,6 +23,8 @@ namespace RazorViewsForMarketers.ValidatorAttributes
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null || (value as string) == null) return ValidationResult.Success;
+
             PropertyInfo propertyRegularExpression = validationContext.ObjectType.GetProperty(RegularExpressionProperty);
 
             if (propertyRegularExpression == null || propertyRegularExpression.PropertyType != typeof(string))
