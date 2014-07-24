@@ -34,7 +34,7 @@ _note: nuget package to be created to replace manual steps below_
 ###Installing Manually
 
 1. [Install Blade](https://github.com/kamsar/Blade/wiki/Installation).
-2. Add a reference to ```RazorViewsForMarketers``` (or copy dll to bin).
+2. Add a reference to ```RazorViewsForMarketers```.
 3. Copy ```/App_Config/Include/RazorViewsForMarketers.config``` into includes folder.
 4. Update ```global.asax``` for dynamic model binding:
 
